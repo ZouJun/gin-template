@@ -1,13 +1,12 @@
 package token
 
 import (
-	"different-industry-alliance/env"
-	"different-industry-alliance/tool"
-	"different-industry-alliance/tool/time_helper"
 	"encoding/json"
 	"errors"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
+	"go-gin-template/env"
+	"go-gin-template/tool/time_helper"
 	"time"
 )
 
@@ -116,22 +115,4 @@ func GetJwtTokenDataByC(c *gin.Context) (jwtTokenStruct JwtTokenStruct, err erro
 	}
 
 	return GetJwtTokenData(authToken)
-}
-
-func GetJwtTokenBusinessByRole(c *gin.Context, roleType string) (err error, jwtTokenStruct JwtTokenStruct) {
-	jwtTokenStruct, err = GetJwtTokenDataByC(c)
-	if err != nil {
-		return
-	}
-	jwtTokenStruct.CurrentRole.BusinessType = roleType
-	switch roleType {
-	case tool.RoleTypeUser:
-		jwtTokenStruct.CurrentRole.BusinessId = jwtTokenStruct.User.Id
-	case tool.RoleTypeMerchant:
-		jwtTokenStruct.CurrentRole.BusinessId = jwtTokenStruct.User.LastOperateMerchantId
-	default:
-		err = errors.New("角色不对")
-	}
-
-	return err, jwtTokenStruct
 }
