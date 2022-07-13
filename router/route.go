@@ -2,8 +2,8 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
-	"go-gin-template/controller"
 	"go-gin-template/middleware"
+	"go-gin-template/router/group"
 )
 
 func InitRouter() *gin.Engine {
@@ -17,10 +17,7 @@ func InitRouter() *gin.Engine {
 	{
 		//接口
 		demoGroup := apiGroup.Group("/demo")
-		{
-			controller.DemoRoute(demoGroup)
-		}
-
+		group.InitDemoRoute(demoGroup)
 	}
 
 	return router

@@ -4,17 +4,16 @@ import (
 	"fmt"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
-	"go-gin-template/tool"
+	"go-gin-template/env"
 	"time"
 )
 
 var (
-	MysqlDB   *gorm.DB
+	MysqlDB *gorm.DB
 )
 
 func InitMysql() (err error) {
-	mysqlUrl := tool.GetOsEnv("DATABASE_URL", "root:xxx@(127.0.0.1:3306)/xx?charset=utf8mb4&parseTime=True&loc=Local")
-	MysqlDB, err = gorm.Open("mysql", mysqlUrl)
+	MysqlDB, err = gorm.Open("mysql", env.DatabaseUrl)
 
 	if err != nil {
 		return err
